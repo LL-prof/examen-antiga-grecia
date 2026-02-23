@@ -156,9 +156,12 @@
       border-radius: 14px;
     }
 
-    /* WORD HIGHLIGHT */
-    .ttsSpan{ padding: 1px 2px; border-radius: 6px; }
-    .ttsActive{ background: rgba(255,255,255,.22); outline: 2px solid rgba(255,255,255,.12); }
+    /* WORD HIGHLIGHT (SIN CAMBIAR TEXTO) */
+    .ttsActive{
+      outline: 3px solid rgba(255,255,255,.22);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
 
     /* RESULTS */
     #results{ display:none; }
@@ -230,14 +233,14 @@
   <div class="wrap">
     <header>
       <div class="titleRow">
-        <h1 id="titleText" data-raw="EXAMEN DE LA ANTIGUA GRECIA Y LAS OLIMPIADAS">EXAMEN DE LA ANTIGUA GRECIA Y LAS OLIMPIADAS</h1>
+        <h1 id="titleText">EXAMEN DE LA ANTIGUA GRECIA Y LAS OLIMPIADAS</h1>
         <div class="smallBtns">
           <button class="btn mini" id="titlePlay" type="button" aria-label="LEER TÍTULO NORMAL">▶</button>
           <button class="btn mini" id="titleTurtle" type="button" aria-pressed="false" aria-label="LEER TÍTULO LENTO">🐢</button>
         </div>
       </div>
       <div class="hint">
-        CADA TEXTO TIENE SU ▶ NORMAL Y SU 🐢 LENTO. SI PULSAS 🐢 OTRA VEZ, SE PARA.
+        CADA TEXTO TIENE SU ▶ NORMAL Y SU 🐢 LENTO. SI PULSAS 🐢 OTRA VEZ, SE PARA. EL TEXTO NO CAMBIA.
       </div>
     </header>
 
@@ -247,9 +250,9 @@
       <div class="footerBar">
         <button class="btn primary" id="gradePlay" type="button" aria-label="LEER CORREGIR Y NOTA NORMAL">▶ LEER</button>
         <button class="btn primary" id="gradeTurtle" type="button" aria-pressed="false" aria-label="LEER CORREGIR Y NOTA LENTO">🐢 LENTO</button>
-        <button class="btn primary" id="gradeBtn" type="button" data-raw="CORREGIR Y NOTA">CORREGIR Y NOTA</button>
+        <button class="btn primary" id="gradeBtn" type="button">CORREGIR Y NOTA</button>
       </div>
-      <div class="note" id="warn" data-raw=""></div>
+      <div class="note" id="warn"></div>
     </main>
 
     <section id="results">
@@ -258,18 +261,18 @@
           <button class="btn mini" id="resultPlay" type="button">▶</button>
           <button class="btn mini" id="resultTurtle" type="button" aria-pressed="false">🐢</button>
         </div>
-        <div class="big" id="resultTitle" data-raw="TU NOTA ES…">TU NOTA ES…</div>
-        <div class="grade" id="resultGrade" data-raw="0,0 / 10">0,0 / 10</div>
+        <div class="big" id="resultTitle">TU NOTA ES…</div>
+        <div class="grade" id="resultGrade">0,0 / 10</div>
 
         <div style="margin-top:14px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
           <button class="btn primary" id="pdfPlay" type="button" aria-label="LEER DESCARGAR PDF NORMAL">▶ LEER</button>
           <button class="btn primary" id="pdfTurtle" type="button" aria-pressed="false" aria-label="LEER DESCARGAR PDF LENTO">🐢 LENTO</button>
-          <button class="btn primary" id="pdfBtn" type="button" data-raw="DESCARGAR PDF">DESCARGAR PDF</button>
+          <button class="btn primary" id="pdfBtn" type="button">DESCARGAR PDF</button>
         </div>
       </div>
 
       <div class="badList" id="badList"></div>
-      <div class="note" id="backNote" data-raw=""></div>
+      <div class="note" id="backNote"></div>
     </section>
   </div>
 
@@ -278,83 +281,50 @@
     // DATA (SOLO TU CONTENIDO)
     // -----------------------------
     const QUESTIONS = [
-      // GRECIA (10)
-      { id: 1,
-        q: "HACE MUCHO TIEMPO EXISTÍA…",
-        opts: { A:"GRECIA ANTIGUA", B:"INTERNET", C:"TELÉFONOS MÓVILES" },
-        correct: "A"
+      { id: 1,  q: "PREGUNTA 1. HACE MUCHO TIEMPO EXISTÍA…",
+        opts: { A:"GRECIA ANTIGUA", B:"INTERNET", C:"TELÉFONOS MÓVILES" }, correct: "A"
       },
-      { id: 2,
-        q: "LAS PERSONAS QUE PENSABAN MUCHO Y PREGUNTABAN COSAS A LA GENTE SE LLAMABAN…",
-        opts: { A:"REYES", B:"ATLETAS", C:"FILÓSOFOS" },
-        correct: "C"
+      { id: 2,  q: "PREGUNTA 2. LAS PERSONAS QUE PENSABAN MUCHO Y PREGUNTABAN COSAS A LA GENTE SE LLAMABAN…",
+        opts: { A:"REYES", B:"ATLETAS", C:"FILÓSOFOS" }, correct: "C"
       },
-      { id: 3,
-        q: "LOS FILÓSOFOS PREGUNTABAN SOBRE…",
-        opts: { A:"CÓMO GANAR CARRERAS", B:"QUÉ ES LA VIDA, LO JUSTO Y LA VERDAD", C:"CÓMO HACER DINERO" },
-        correct: "B"
+      { id: 3,  q: "PREGUNTA 3. LOS FILÓSOFOS PREGUNTABAN SOBRE…",
+        opts: { A:"CÓMO GANAR CARRERAS", B:"QUÉ ES LA VIDA, LO JUSTO Y LA VERDAD", C:"CÓMO HACER DINERO" }, correct: "B"
       },
-      { id: 4,
-        q: "FILÓSOFOS SIGNIFICA…",
-        opts: { A:"AMIGOS DE LA GUERRA", B:"AMIGOS DEL DINERO", C:"AMIGOS DE LA SABIDURÍA" },
-        correct: "C"
+      { id: 4,  q: "PREGUNTA 4. FILÓSOFOS SIGNIFICA…",
+        opts: { A:"AMIGOS DE LA GUERRA", B:"AMIGOS DEL DINERO", C:"AMIGOS DE LA SABIDURÍA" }, correct: "C"
       },
-      { id: 5,
-        q: "DEMOCRACIA SIGNIFICA…",
-        opts: { A:"EL REY DECIDE", B:"EL PUEBLO DECIDE", C:"LOS SOLDADOS DECIDEN" },
-        correct: "B"
+      { id: 5,  q: "PREGUNTA 5. DEMOCRACIA SIGNIFICA…",
+        opts: { A:"EL REY DECIDE", B:"EL PUEBLO DECIDE", C:"LOS SOLDADOS DECIDEN" }, correct: "B"
       },
-      { id: 6,
-        q: "EN LA DEMOCRACIA…",
-        opts: { A:"SE HABLABA Y SE VOTABA Y SE ELEGÍAN RESPONSABLES", B:"DECIDÍA SOLO UN REY", C:"NO SE VOTABA NUNCA" },
-        correct: "A"
+      { id: 6,  q: "PREGUNTA 6. EN LA DEMOCRACIA…",
+        opts: { A:"SE HABLABA Y SE VOTABA Y SE ELEGÍAN RESPONSABLES", B:"DECIDÍA SOLO UN REY", C:"NO SE VOTABA NUNCA" }, correct: "A"
       },
-      { id: 7,
-        q: "EN GRECIA CONTABAN HISTORIAS EN…",
-        opts: { A:"UN MERCADO", B:"UN TEATRO", C:"UNA GUERRA" },
-        correct: "B"
+      { id: 7,  q: "PREGUNTA 7. EN GRECIA CONTABAN HISTORIAS EN…",
+        opts: { A:"UN MERCADO", B:"UN TEATRO", C:"UNA GUERRA" }, correct: "B"
       },
-      { id: 8,
-        q: "EN EL TEATRO HABÍA…",
-        opts: { A:"ACTORES, MÁSCARAS Y PÚBLICO", B:"SOLO REYES", C:"SOLO SOLDADOS" },
-        correct: "A"
+      { id: 8,  q: "PREGUNTA 8. EN EL TEATRO HABÍA…",
+        opts: { A:"ACTORES, MÁSCARAS Y PÚBLICO", B:"SOLO REYES", C:"SOLO SOLDADOS" }, correct: "A"
       },
-      { id: 9,
-        q: "EN GRECIA CONSTRUÍAN…",
-        opts: { A:"TEMPLOS Y EDIFICIOS MUY BONITOS", B:"RASCACIELOS", C:"AEROPUERTOS" },
-        correct: "A"
+      { id: 9,  q: "PREGUNTA 9. EN GRECIA CONSTRUÍAN…",
+        opts: { A:"TEMPLOS Y EDIFICIOS MUY BONITOS", B:"RASCACIELOS", C:"AEROPUERTOS" }, correct: "A"
       },
-      { id: 10,
-        q: "HOY, MUCHOS EDIFICIOS USAN IDEAS PARECIDAS A GRECIA COMO…",
-        opts: { A:"COLUMNAS, ESCALERAS Y FACHADAS", B:"NEÓN Y PLÁSTICO", C:"ROBOTS Y DRONES" },
-        correct: "A"
+      { id: 10, q: "PREGUNTA 10. HOY, MUCHOS EDIFICIOS USAN IDEAS PARECIDAS A GRECIA COMO…",
+        opts: { A:"COLUMNAS, ESCALERAS Y FACHADAS", B:"NEÓN Y PLÁSTICO", C:"ROBOTS Y DRONES" }, correct: "A"
       },
-
-      // OLIMPIADAS (5)
-      { id: 11,
-        q: "¿QUÉ ERAN LAS OLIMPIADAS?",
-        opts: { A:"GUERRAS", B:"PELEAS", C:"JUEGOS DEPORTIVOS" },
-        correct: "C"
+      { id: 11, q: "PREGUNTA 11. ¿QUÉ ERAN LAS OLIMPIADAS?",
+        opts: { A:"GUERRAS", B:"PELEAS", C:"JUEGOS DEPORTIVOS" }, correct: "C"
       },
-      { id: 12,
-        q: "LAS OLIMPIADAS SE HACÍAN SIEMPRE EN EL MISMO LUGAR. ESE LUGAR SE LLAMABA…",
-        opts: { A:"ATENAS", B:"OLIMPIA", C:"ROMA" },
-        correct: "B"
+      { id: 12, q: "PREGUNTA 12. LAS OLIMPIADAS SE HACÍAN SIEMPRE EN EL MISMO LUGAR. ESE LUGAR SE LLAMABA…",
+        opts: { A:"ATENAS", B:"OLIMPIA", C:"ROMA" }, correct: "B"
       },
-      { id: 13,
-        q: "CADA ATLETA COMPETÍA…",
-        opts: { A:"EN EQUIPO", B:"SOLO", C:"CON SU FAMILIA" },
-        correct: "B"
+      { id: 13, q: "PREGUNTA 13. CADA ATLETA COMPETÍA…",
+        opts: { A:"EN EQUIPO", B:"SOLO", C:"CON SU FAMILIA" }, correct: "B"
       },
-      { id: 14,
-        q: "EL GANADOR NO RECIBÍA DINERO. RECIBÍA…",
-        opts: { A:"UNA MEDALLA", B:"UNA CORONA DE HOJAS", C:"UN TROFEO DE ORO" },
-        correct: "B"
+      { id: 14, q: "PREGUNTA 14. EL GANADOR NO RECIBÍA DINERO. RECIBÍA…",
+        opts: { A:"UNA MEDALLA", B:"UNA CORONA DE HOJAS", C:"UN TROFEO DE ORO" }, correct: "B"
       },
-      { id: 15,
-        q: "EL GANADOR ERA MUY…",
-        opts: { A:"CASTIGADO", B:"RESPETADO", C:"OLVIDADO" },
-        correct: "B"
+      { id: 15, q: "PREGUNTA 15. EL GANADOR ERA MUY…",
+        opts: { A:"CASTIGADO", B:"RESPETADO", C:"OLVIDADO" }, correct: "B"
       }
     ];
 
@@ -368,7 +338,7 @@
     };
 
     // -----------------------------
-    // SPEECH
+    // SPEECH (NO MODIFICA EL TEXTO)
     // -----------------------------
     function supportsSpeech(){
       return ("speechSynthesis" in window) && ("SpeechSynthesisUtterance" in window);
@@ -377,7 +347,7 @@
     function stopAllSpeech(){
       try { window.speechSynthesis.cancel(); } catch(e){}
       stopSlowJob();
-      clearAllHighlights();
+      clearActiveOutline();
     }
 
     function stopSlowJob(){
@@ -389,20 +359,8 @@
       return String(text).replace(/\s+/g, " ").trim();
     }
 
-    function clearAllHighlights(){
-      document.querySelectorAll(".ttsActive").forEach(s => s.classList.remove("ttsActive"));
-    }
-
-    function setHighlightable(el, text){
-      el.innerHTML = "";
-      const words = normalizeTextForSpeech(text).split(" ");
-      words.forEach((w, i) => {
-        const span = document.createElement("span");
-        span.className = "ttsSpan";
-        span.textContent = w + (i < words.length - 1 ? " " : "");
-        el.appendChild(span);
-      });
-      return el.querySelectorAll(".ttsSpan");
+    function clearActiveOutline(){
+      document.querySelectorAll(".ttsActive").forEach(el => el.classList.remove("ttsActive"));
     }
 
     function getSpanishVoice(){
@@ -425,7 +383,7 @@
       window.speechSynthesis.speak(u);
     }
 
-    async function speakSlowWordByWord(targetEl, text, job){
+    async function speakSlowPlain(targetEl, text, job){
       if (!supportsSpeech()) return;
 
       stopAllSpeech();
@@ -433,17 +391,16 @@
 
       const raw = normalizeTextForSpeech(text);
       const words = raw.split(" ");
-      const spans = setHighlightable(targetEl, raw);
 
       const v = getSpanishVoice();
       const lang = (v && v.lang) ? v.lang : "es-ES";
 
+      // SOLO RESALTA EL BLOQUE ENTERO (SIN CAMBIAR INNERHTML)
+      if (targetEl) targetEl.classList.add("ttsActive");
+
       try{
         for (let i = 0; i < words.length; i++){
           if (job.stop) break;
-
-          clearAllHighlights();
-          if (spans[i]) spans[i].classList.add("ttsActive");
 
           await new Promise(resolve => {
             if (job.stop) return resolve();
@@ -461,15 +418,14 @@
           await new Promise(r => setTimeout(r, 80));
         }
       } finally{
-        clearAllHighlights();
-        targetEl.textContent = raw;
+        if (targetEl) targetEl.classList.remove("ttsActive");
         stopSlowJob();
       }
     }
 
-    // NORMAL: NO LEE EMOJIS, USAMOS RAW QUE LE PASAMOS
-    // LENTO: TOGGLE POR BOTÓN
-    function speakFromButton(textEl, rawText, slow, toggleBtn){
+    // NORMAL: LEE EL TEXTO QUE LE PASAS, SIN TOCAR EL DOM
+    // LENTO: TOGGLE POR BOTÓN, SIN TOCAR EL DOM
+    function speakFromButton(targetEl, rawText, slow, toggleBtn){
       if (!supportsSpeech()){
         alert("TU NAVEGADOR NO SOPORTA LECTOR DE VOZ.");
         return;
@@ -480,10 +436,6 @@
       if (!slow){
         if (toggleBtn) toggleBtn.setAttribute("aria-pressed", "false");
         stopAllSpeech();
-        if (textEl){
-          textEl.dataset.raw = clean;
-          textEl.textContent = clean;
-        }
         speakNormal(clean);
         return;
       }
@@ -496,10 +448,8 @@
       }
 
       if (toggleBtn) toggleBtn.setAttribute("aria-pressed", "true");
-      if (textEl) textEl.dataset.raw = clean;
-
       const job = { stop: false };
-      speakSlowWordByWord(textEl, clean, job).finally(() => {
+      speakSlowPlain(targetEl, clean, job).finally(() => {
         if (toggleBtn) toggleBtn.setAttribute("aria-pressed", "false");
       });
     }
@@ -517,12 +467,7 @@
 
       const qP = document.createElement("p");
       qP.className = "qText";
-
-      const qDisplay = `${item.id}️⃣ ${item.q}`;         // LO QUE SE VE
-      const qSpeech  = `PREGUNTA ${item.id}. ${item.q}`; // LO QUE SE OYE
-
-      qP.textContent = qDisplay;
-      qP.dataset.raw = qSpeech;
+      qP.textContent = item.q; // TEXTO FIJO
 
       const btns = document.createElement("div");
       btns.className = "smallBtns";
@@ -538,8 +483,8 @@
       turtle.textContent = "🐢";
       turtle.setAttribute("aria-pressed", "false");
 
-      play.addEventListener("click", () => speakFromButton(qP, qSpeech, false, turtle));
-      turtle.addEventListener("click", () => speakFromButton(qP, qSpeech, true, turtle));
+      play.addEventListener("click", () => speakFromButton(qP, item.q, false, turtle));
+      turtle.addEventListener("click", () => speakFromButton(qP, item.q, true, turtle));
 
       btns.appendChild(play);
       btns.appendChild(turtle);
@@ -562,9 +507,7 @@
 
         const text = document.createElement("div");
         text.className = "optText";
-        text.textContent = item.opts[k];
-
-        const optSpeech = `OPCIÓN ${k}. ${item.opts[k]}`;
+        text.textContent = item.opts[k]; // TEXTO FIJO
 
         const playOpt = document.createElement("button");
         playOpt.type = "button";
@@ -577,13 +520,16 @@
         turtleOpt.textContent = "🐢";
         turtleOpt.setAttribute("aria-pressed", "false");
 
+        // ✅ SOLO LEE EL TEXTO, SIN "OPCIÓN A/B/C", SIN "A)"
+        const speechText = item.opts[k];
+
         playOpt.addEventListener("click", (e) => {
           e.stopPropagation();
-          speakFromButton(text, optSpeech, false, turtleOpt);
+          speakFromButton(text, speechText, false, turtleOpt);
         });
         turtleOpt.addEventListener("click", (e) => {
           e.stopPropagation();
-          speakFromButton(text, optSpeech, true, turtleOpt);
+          speakFromButton(text, speechText, true, turtleOpt);
         });
 
         const right = document.createElement("div");
@@ -667,7 +613,6 @@
       doc.text(`FECHA: ${when}`, margin, y);
       y += 18;
 
-      // Nota (si ya está calculada)
       doc.setFont("helvetica", "bold");
       doc.setFontSize(11);
       doc.text(state.resultSpeechText.toUpperCase(), margin, y);
@@ -728,10 +673,8 @@
       document.getElementById("exam").style.display = "none";
       document.getElementById("results").style.display = "block";
 
-      const resultTitle = document.getElementById("resultTitle");
-      const resultGrade = document.getElementById("resultGrade");
-      resultTitle.textContent = "TU NOTA ES…";
-      resultGrade.textContent = `${scoreStr} / 10`;
+      document.getElementById("resultTitle").textContent = "TU NOTA ES…";
+      document.getElementById("resultGrade").textContent = `${scoreStr} / 10`;
 
       const badList = document.getElementById("badList");
       badList.innerHTML = "";
@@ -750,9 +693,7 @@
           qLine.className = "badQ";
 
           const qText = document.createElement("div");
-          const qDisplay = `${w.q.id}️⃣ ${w.q.q}`;
-          const qSpeech  = `PREGUNTA ${w.q.id}. ${w.q.q}`;
-          qText.textContent = qDisplay;
+          qText.textContent = w.q.q; // YA ES "PREGUNTA X. ..."
 
           const qBtns = document.createElement("div");
           qBtns.className = "smallBtns";
@@ -768,8 +709,8 @@
           bTurtle.textContent = "🐢";
           bTurtle.setAttribute("aria-pressed", "false");
 
-          bPlay.addEventListener("click", () => speakFromButton(qText, qSpeech, false, bTurtle));
-          bTurtle.addEventListener("click", () => speakFromButton(qText, qSpeech, true, bTurtle));
+          bPlay.addEventListener("click", () => speakFromButton(qText, w.q.q, false, bTurtle));
+          bTurtle.addEventListener("click", () => speakFromButton(qText, w.q.q, true, bTurtle));
 
           qBtns.appendChild(bPlay);
           qBtns.appendChild(bTurtle);
