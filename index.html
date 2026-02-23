@@ -77,14 +77,6 @@
       line-height: 1.25;
     }
 
-    .sectionTitle{
-      margin: 20px 2px 10px;
-      font-weight: 1000;
-      letter-spacing: 1px;
-      color: #ffffff;
-      opacity:.95;
-    }
-
     .qCard{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border: 1px solid var(--border);
@@ -244,13 +236,13 @@
           <button class="btn mini" id="titleTurtle" type="button" aria-pressed="false" aria-label="LEER TÍTULO LENTO">🐢</button>
         </div>
       </div>
+      <div class="hint">
+        CADA TEXTO TIENE SU ▶ NORMAL Y SU 🐢 LENTO. SI PULSAS 🐢 OTRA VEZ, SE PARA.
+      </div>
     </header>
 
     <main id="exam">
-  
-      <div id="grecia"></div>
-
-      <div id="olimpiadas"></div>
+      <div id="questions"></div>
 
       <div class="footerBar">
         <button class="btn primary" id="gradePlay" type="button" aria-label="LEER CORREGIR Y NOTA NORMAL">▶ LEER</button>
@@ -268,6 +260,12 @@
         </div>
         <div class="big" id="resultTitle" data-raw="TU NOTA ES…">TU NOTA ES…</div>
         <div class="grade" id="resultGrade" data-raw="0,0 / 10">0,0 / 10</div>
+
+        <div style="margin-top:14px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+          <button class="btn primary" id="pdfPlay" type="button" aria-label="LEER DESCARGAR PDF NORMAL">▶ LEER</button>
+          <button class="btn primary" id="pdfTurtle" type="button" aria-pressed="false" aria-label="LEER DESCARGAR PDF LENTO">🐢 LENTO</button>
+          <button class="btn primary" id="pdfBtn" type="button" data-raw="DESCARGAR PDF">DESCARGAR PDF</button>
+        </div>
       </div>
 
       <div class="badList" id="badList"></div>
@@ -281,79 +279,79 @@
     // -----------------------------
     const QUESTIONS = [
       // GRECIA (10)
-      { id: 1, section: "grecia",
+      { id: 1,
         q: "HACE MUCHO TIEMPO EXISTÍA…",
         opts: { A:"GRECIA ANTIGUA", B:"INTERNET", C:"TELÉFONOS MÓVILES" },
         correct: "A"
       },
-      { id: 2, section: "grecia",
+      { id: 2,
         q: "LAS PERSONAS QUE PENSABAN MUCHO Y PREGUNTABAN COSAS A LA GENTE SE LLAMABAN…",
         opts: { A:"REYES", B:"ATLETAS", C:"FILÓSOFOS" },
         correct: "C"
       },
-      { id: 3, section: "grecia",
+      { id: 3,
         q: "LOS FILÓSOFOS PREGUNTABAN SOBRE…",
         opts: { A:"CÓMO GANAR CARRERAS", B:"QUÉ ES LA VIDA, LO JUSTO Y LA VERDAD", C:"CÓMO HACER DINERO" },
         correct: "B"
       },
-      { id: 4, section: "grecia",
+      { id: 4,
         q: "FILÓSOFOS SIGNIFICA…",
         opts: { A:"AMIGOS DE LA GUERRA", B:"AMIGOS DEL DINERO", C:"AMIGOS DE LA SABIDURÍA" },
         correct: "C"
       },
-      { id: 5, section: "grecia",
+      { id: 5,
         q: "DEMOCRACIA SIGNIFICA…",
         opts: { A:"EL REY DECIDE", B:"EL PUEBLO DECIDE", C:"LOS SOLDADOS DECIDEN" },
         correct: "B"
       },
-      { id: 6, section: "grecia",
+      { id: 6,
         q: "EN LA DEMOCRACIA…",
         opts: { A:"SE HABLABA Y SE VOTABA Y SE ELEGÍAN RESPONSABLES", B:"DECIDÍA SOLO UN REY", C:"NO SE VOTABA NUNCA" },
         correct: "A"
       },
-      { id: 7, section: "grecia",
+      { id: 7,
         q: "EN GRECIA CONTABAN HISTORIAS EN…",
         opts: { A:"UN MERCADO", B:"UN TEATRO", C:"UNA GUERRA" },
         correct: "B"
       },
-      { id: 8, section: "grecia",
+      { id: 8,
         q: "EN EL TEATRO HABÍA…",
         opts: { A:"ACTORES, MÁSCARAS Y PÚBLICO", B:"SOLO REYES", C:"SOLO SOLDADOS" },
         correct: "A"
       },
-      { id: 9, section: "grecia",
+      { id: 9,
         q: "EN GRECIA CONSTRUÍAN…",
         opts: { A:"TEMPLOS Y EDIFICIOS MUY BONITOS", B:"RASCACIELOS", C:"AEROPUERTOS" },
         correct: "A"
       },
-      { id: 10, section: "grecia",
+      { id: 10,
         q: "HOY, MUCHOS EDIFICIOS USAN IDEAS PARECIDAS A GRECIA COMO…",
         opts: { A:"COLUMNAS, ESCALERAS Y FACHADAS", B:"NEÓN Y PLÁSTICO", C:"ROBOTS Y DRONES" },
         correct: "A"
       },
 
       // OLIMPIADAS (5)
-      { id: 11, section: "olimpiadas",
+      { id: 11,
         q: "¿QUÉ ERAN LAS OLIMPIADAS?",
         opts: { A:"GUERRAS", B:"PELEAS", C:"JUEGOS DEPORTIVOS" },
         correct: "C"
       },
-      { id: 12, section: "olimpiadas",
+      { id: 12,
         q: "LAS OLIMPIADAS SE HACÍAN SIEMPRE EN EL MISMO LUGAR. ESE LUGAR SE LLAMABA…",
         opts: { A:"ATENAS", B:"OLIMPIA", C:"ROMA" },
         correct: "B"
       },
-      { id: 13, section: "olimpiadas",
+      { id: 13,
         q: "CADA ATLETA COMPETÍA…",
         opts: { A:"EN EQUIPO", B:"SOLO", C:"CON SU FAMILIA" },
         correct: "B"
       },
-      { id: 14, section: "olimpiadas",
+      { id: 14,
         q: "EL GANADOR NO RECIBÍA DINERO. RECIBÍA…",
         opts: { A:"UNA MEDALLA", B:"UNA CORONA DE HOJAS", C:"UN TROFEO DE ORO" },
         correct: "B"
       },
-      { id: 15, section: "olimpiadas",
+      { id: 15,
         q: "EL GANADOR ERA MUY…",
         opts: { A:"CASTIGADO", B:"RESPETADO", C:"OLVIDADO" },
         correct: "B"
@@ -365,12 +363,12 @@
     // -----------------------------
     const state = {
       selected: new Map(), // qid -> 'A'|'B'|'C'
-      slowJob: null,       // { stop: true/false }
+      slowJob: null,
       resultSpeechText: "TU NOTA ES… 0,0 / 10"
     };
 
     // -----------------------------
-    // SPEECH UTILS
+    // SPEECH
     // -----------------------------
     function supportsSpeech(){
       return ("speechSynthesis" in window) && ("SpeechSynthesisUtterance" in window);
@@ -391,10 +389,8 @@
       return String(text).replace(/\s+/g, " ").trim();
     }
 
-    function getRawText(el, fallback=""){
-      const raw = el?.dataset?.raw;
-      if (raw && raw.trim().length) return raw;
-      return fallback || (el ? normalizeTextForSpeech(el.textContent) : "");
+    function clearAllHighlights(){
+      document.querySelectorAll(".ttsActive").forEach(s => s.classList.remove("ttsActive"));
     }
 
     function setHighlightable(el, text){
@@ -407,10 +403,6 @@
         el.appendChild(span);
       });
       return el.querySelectorAll(".ttsSpan");
-    }
-
-    function clearAllHighlights(){
-      document.querySelectorAll(".ttsActive").forEach(s => s.classList.remove("ttsActive"));
     }
 
     function getSpanishVoice(){
@@ -470,26 +462,25 @@
         }
       } finally{
         clearAllHighlights();
-        // IMPORTANT: RESTAURA TEXTO PLANO (EVITA REPETICIONES RARAS DESPUÉS)
         targetEl.textContent = raw;
         stopSlowJob();
       }
     }
 
-    // FIX BUG: PARA ▶ NORMAL SIEMPRE USAMOS TEXTO "RAW" (NO textContent CON SPANS)
+    // NORMAL: NO LEE EMOJIS, USAMOS RAW QUE LE PASAMOS
+    // LENTO: TOGGLE POR BOTÓN
     function speakFromButton(textEl, rawText, slow, toggleBtn){
       if (!supportsSpeech()){
         alert("TU NAVEGADOR NO SOPORTA LECTOR DE VOZ.");
         return;
       }
 
-      // NORMAL
+      const clean = normalizeTextForSpeech(rawText);
+
       if (!slow){
         if (toggleBtn) toggleBtn.setAttribute("aria-pressed", "false");
-        // aseguramos texto plano y estable
         stopAllSpeech();
-        const clean = normalizeTextForSpeech(rawText);
-        if (textEl) {
+        if (textEl){
           textEl.dataset.raw = clean;
           textEl.textContent = clean;
         }
@@ -497,7 +488,6 @@
         return;
       }
 
-      // LENTO TOGGLE (POR TEXTO)
       const pressed = (toggleBtn?.getAttribute("aria-pressed") === "true");
       if (pressed){
         toggleBtn.setAttribute("aria-pressed", "false");
@@ -506,7 +496,6 @@
       }
 
       if (toggleBtn) toggleBtn.setAttribute("aria-pressed", "true");
-      const clean = normalizeTextForSpeech(rawText);
       if (textEl) textEl.dataset.raw = clean;
 
       const job = { stop: false };
@@ -528,9 +517,12 @@
 
       const qP = document.createElement("p");
       qP.className = "qText";
-      const qRaw = `${item.id}️⃣ ${item.q}`;
-      qP.textContent = qRaw;
-      qP.dataset.raw = qRaw;
+
+      const qDisplay = `${item.id}️⃣ ${item.q}`;         // LO QUE SE VE
+      const qSpeech  = `PREGUNTA ${item.id}. ${item.q}`; // LO QUE SE OYE
+
+      qP.textContent = qDisplay;
+      qP.dataset.raw = qSpeech;
 
       const btns = document.createElement("div");
       btns.className = "smallBtns";
@@ -539,17 +531,15 @@
       play.type = "button";
       play.className = "btn mini";
       play.textContent = "▶";
-      play.setAttribute("aria-label", "LEER PREGUNTA NORMAL");
 
       const turtle = document.createElement("button");
       turtle.type = "button";
       turtle.className = "btn mini";
       turtle.textContent = "🐢";
       turtle.setAttribute("aria-pressed", "false");
-      turtle.setAttribute("aria-label", "LEER PREGUNTA LENTO");
 
-      play.addEventListener("click", () => speakFromButton(qP, qRaw, false, turtle));
-      turtle.addEventListener("click", () => speakFromButton(qP, qRaw, true, turtle));
+      play.addEventListener("click", () => speakFromButton(qP, qSpeech, false, turtle));
+      turtle.addEventListener("click", () => speakFromButton(qP, qSpeech, true, turtle));
 
       btns.appendChild(play);
       btns.appendChild(turtle);
@@ -572,30 +562,28 @@
 
         const text = document.createElement("div");
         text.className = "optText";
-        const optRaw = `${k}) ${item.opts[k]}`;
         text.textContent = item.opts[k];
-        text.dataset.raw = optRaw;
+
+        const optSpeech = `OPCIÓN ${k}. ${item.opts[k]}`;
 
         const playOpt = document.createElement("button");
         playOpt.type = "button";
         playOpt.className = "btn mini";
         playOpt.textContent = "▶";
-        playOpt.setAttribute("aria-label", `LEER RESPUESTA ${k} NORMAL`);
 
         const turtleOpt = document.createElement("button");
         turtleOpt.type = "button";
         turtleOpt.className = "btn mini";
         turtleOpt.textContent = "🐢";
         turtleOpt.setAttribute("aria-pressed", "false");
-        turtleOpt.setAttribute("aria-label", `LEER RESPUESTA ${k} LENTO`);
 
         playOpt.addEventListener("click", (e) => {
           e.stopPropagation();
-          speakFromButton(text, optRaw, false, turtleOpt);
+          speakFromButton(text, optSpeech, false, turtleOpt);
         });
         turtleOpt.addEventListener("click", (e) => {
           e.stopPropagation();
-          speakFromButton(text, optRaw, true, turtleOpt);
+          speakFromButton(text, optSpeech, true, turtleOpt);
         });
 
         const right = document.createElement("div");
@@ -619,17 +607,9 @@
     }
 
     function render(){
-      const g = document.getElementById("grecia");
-      const o = document.getElementById("olimpiadas");
-      g.innerHTML = "";
-      o.innerHTML = "";
-
-      QUESTIONS.forEach(q => {
-        const card = makeQuestionCard(q);
-        if (q.section === "grecia") g.appendChild(card);
-        else o.appendChild(card);
-      });
-
+      const root = document.getElementById("questions");
+      root.innerHTML = "";
+      QUESTIONS.forEach(q => root.appendChild(makeQuestionCard(q)));
       refreshSelections();
     }
 
@@ -657,9 +637,9 @@
     }
 
     // -----------------------------
-    // PDF (OPCIÓN B)
+    // PDF (DESCARGA MANUAL)
     // -----------------------------
-    function generatePDF(){
+    function generateAndDownloadPDF(){
       const { jsPDF } = window.jspdf || {};
       if (!jsPDF){
         alert("NO SE HA PODIDO CARGAR EL GENERADOR DE PDF.");
@@ -669,27 +649,34 @@
       const doc = new jsPDF({ unit: "pt", format: "a4" });
       const pageW = doc.internal.pageSize.getWidth();
       const pageH = doc.internal.pageSize.getHeight();
-      const margin = 48;
+      const margin = 44;
       const maxW = pageW - margin * 2;
 
       const title = "EXAMEN DE LA ANTIGUA GRECIA Y LAS OLIMPIADAS";
-      const when = new Date().toLocaleString("es-ES");
+      const when = new Date().toLocaleString("es-ES").toUpperCase();
 
       let y = margin;
 
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(16);
+      doc.setFontSize(14);
       doc.text(title, margin, y);
       y += 18;
 
       doc.setFont("helvetica", "normal");
       doc.setFontSize(10);
-      doc.text(`FECHA: ${when}`.toUpperCase(), margin, y);
-      y += 22;
+      doc.text(`FECHA: ${when}`, margin, y);
+      y += 18;
 
+      // Nota (si ya está calculada)
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text(state.resultSpeechText.toUpperCase(), margin, y);
+      y += 18;
+
+      doc.setFont("helvetica", "normal");
       doc.setFontSize(11);
 
-      function addLine(text){
+      function addLines(text){
         const lines = doc.splitTextToSize(String(text).toUpperCase(), maxW);
         for (const line of lines){
           if (y > pageH - margin){
@@ -703,17 +690,21 @@
 
       QUESTIONS.forEach((q) => {
         const chosenKey = state.selected.get(q.id) || "";
-        const chosenText = chosenKey ? `${chosenKey}) ${q.opts[chosenKey]}` : "NO CONTESTASTE";
-        addLine(`${q.id}) ${q.q}`);
-        addLine(`RESPUESTA ELEGIDA: ${chosenText}`);
-        y += 8;
+        const chosenLine = chosenKey ? `ELEGIDA: ${chosenKey}) ${q.opts[chosenKey]}` : "ELEGIDA: NO CONTESTASTE";
+
+        addLines(`${q.id}) ${q.q}`);
+        addLines(`A) ${q.opts.A}`);
+        addLines(`B) ${q.opts.B}`);
+        addLines(`C) ${q.opts.C}`);
+        addLines(chosenLine);
+        y += 10;
       });
 
       doc.save("EXAMEN_ANTIGUA_GRECIA_Y_OLIMPIADAS.pdf");
     }
 
     // -----------------------------
-    // GRADING + RESULTS
+    // GRADING
     // -----------------------------
     function grade(){
       stopAllSpeech();
@@ -732,21 +723,16 @@
       const score10 = (correctCount / total) * 10;
       const scoreStr = score10.toFixed(1).replace(".", ",");
 
-      // Result speech text FIXED (NO textContent)
       state.resultSpeechText = `TU NOTA ES… ${scoreStr} / 10`;
 
-      // Hide exam, show results
       document.getElementById("exam").style.display = "none";
       document.getElementById("results").style.display = "block";
 
       const resultTitle = document.getElementById("resultTitle");
       const resultGrade = document.getElementById("resultGrade");
-      resultTitle.dataset.raw = "TU NOTA ES…";
       resultTitle.textContent = "TU NOTA ES…";
-      resultGrade.dataset.raw = `${scoreStr} / 10`;
       resultGrade.textContent = `${scoreStr} / 10`;
 
-      // Build wrong list
       const badList = document.getElementById("badList");
       badList.innerHTML = "";
 
@@ -764,9 +750,9 @@
           qLine.className = "badQ";
 
           const qText = document.createElement("div");
-          const qRaw = `${w.q.id}️⃣ ${w.q.q}`;
-          qText.textContent = qRaw;
-          qText.dataset.raw = qRaw;
+          const qDisplay = `${w.q.id}️⃣ ${w.q.q}`;
+          const qSpeech  = `PREGUNTA ${w.q.id}. ${w.q.q}`;
+          qText.textContent = qDisplay;
 
           const qBtns = document.createElement("div");
           qBtns.className = "smallBtns";
@@ -782,8 +768,8 @@
           bTurtle.textContent = "🐢";
           bTurtle.setAttribute("aria-pressed", "false");
 
-          bPlay.addEventListener("click", () => speakFromButton(qText, qRaw, false, bTurtle));
-          bTurtle.addEventListener("click", () => speakFromButton(qText, qRaw, true, bTurtle));
+          bPlay.addEventListener("click", () => speakFromButton(qText, qSpeech, false, bTurtle));
+          bTurtle.addEventListener("click", () => speakFromButton(qText, qSpeech, true, bTurtle));
 
           qBtns.appendChild(bPlay);
           qBtns.appendChild(bTurtle);
@@ -799,17 +785,15 @@
 
           const chosenRow = document.createElement("div");
           chosenRow.className = "tag chosen";
-          const chosenRaw = `TU RESPUESTA: ${chosenText}`;
-          chosenRow.textContent = chosenRaw;
-          chosenRow.dataset.raw = chosenRaw;
+          const chosenSpeech = `TU RESPUESTA. ${chosenText}`;
+          chosenRow.textContent = `TU RESPUESTA: ${chosenText}`;
 
           const correctRow = document.createElement("div");
           correctRow.className = "tag correct";
-          const correctRaw = `RESPUESTA CORRECTA: ${correctText}`;
-          correctRow.textContent = correctRaw;
-          correctRow.dataset.raw = correctRaw;
+          const correctSpeech = `RESPUESTA CORRECTA. ${correctText}`;
+          correctRow.textContent = `RESPUESTA CORRECTA: ${correctText}`;
 
-          function makeReadBtns(targetEl, rawText){
+          function makeReadBtns(targetEl, speechText){
             const wrap = document.createElement("div");
             wrap.className = "smallBtns";
 
@@ -824,8 +808,8 @@
             t.textContent = "🐢";
             t.setAttribute("aria-pressed", "false");
 
-            p.addEventListener("click", () => speakFromButton(targetEl, rawText, false, t));
-            t.addEventListener("click", () => speakFromButton(targetEl, rawText, true, t));
+            p.addEventListener("click", () => speakFromButton(targetEl, speechText, false, t));
+            t.addEventListener("click", () => speakFromButton(targetEl, speechText, true, t));
 
             wrap.appendChild(p);
             wrap.appendChild(t);
@@ -839,7 +823,7 @@
           chosenWrap.style.alignItems = "flex-start";
           chosenWrap.style.flexWrap = "wrap";
           chosenWrap.appendChild(chosenRow);
-          chosenWrap.appendChild(makeReadBtns(chosenRow, chosenRaw));
+          chosenWrap.appendChild(makeReadBtns(chosenRow, chosenSpeech));
 
           const correctWrap = document.createElement("div");
           correctWrap.style.display = "flex";
@@ -848,24 +832,18 @@
           correctWrap.style.alignItems = "flex-start";
           correctWrap.style.flexWrap = "wrap";
           correctWrap.appendChild(correctRow);
-          correctWrap.appendChild(makeReadBtns(correctRow, correctRaw));
+          correctWrap.appendChild(makeReadBtns(correctRow, correctSpeech));
 
           answers.appendChild(chosenWrap);
           answers.appendChild(correctWrap);
 
           item.appendChild(qLine);
           item.appendChild(answers);
-
           badList.appendChild(item);
         });
       }
 
-      const back = document.getElementById("backNote");
-      back.dataset.raw = "SI QUIERES REPETIR, RECARGA LA PÁGINA.";
-      back.textContent = "SI QUIERES REPETIR, RECARGA LA PÁGINA.";
-
-      // ✅ GENERAR PDF AUTOMÁTICAMENTE AL ACABAR
-      generatePDF();
+      document.getElementById("backNote").textContent = "SI QUIERES REPETIR, RECARGA LA PÁGINA.";
     }
 
     // -----------------------------
@@ -875,7 +853,7 @@
       const titleEl = document.getElementById("titleText");
       const titlePlay = document.getElementById("titlePlay");
       const titleTurtle = document.getElementById("titleTurtle");
-      const raw = getRawText(titleEl, titleEl.textContent);
+      const raw = "EXAMEN DE LA ANTIGUA GRECIA Y LAS OLIMPIADAS";
 
       titlePlay.addEventListener("click", () => speakFromButton(titleEl, raw, false, titleTurtle));
       titleTurtle.addEventListener("click", () => speakFromButton(titleEl, raw, true, titleTurtle));
@@ -885,7 +863,7 @@
       const gradeBtn = document.getElementById("gradeBtn");
       const gradePlay = document.getElementById("gradePlay");
       const gradeTurtle = document.getElementById("gradeTurtle");
-      const raw = getRawText(gradeBtn, "CORREGIR Y NOTA");
+      const raw = "CORREGIR Y NOTA";
 
       gradePlay.addEventListener("click", () => speakFromButton(gradeBtn, raw, false, gradeTurtle));
       gradeTurtle.addEventListener("click", () => speakFromButton(gradeBtn, raw, true, gradeTurtle));
@@ -895,12 +873,10 @@
         const warn = document.getElementById("warn");
         if (!ok){
           const msg = "FALTAN PREGUNTAS SIN RESPONDER. RESPONDE TODAS ANTES DE CORREGIR.";
-          warn.dataset.raw = msg;
           warn.textContent = msg;
           speakNormal(msg);
           return;
         }
-        warn.dataset.raw = "";
         warn.textContent = "";
         grade();
       });
@@ -911,9 +887,20 @@
       const turtle = document.getElementById("resultTurtle");
       const title = document.getElementById("resultTitle");
 
-      // ✅ FIX BUG: leer SIEMPRE desde state.resultSpeechText (texto estable)
       play.addEventListener("click", () => speakFromButton(title, state.resultSpeechText, false, turtle));
       turtle.addEventListener("click", () => speakFromButton(title, state.resultSpeechText, true, turtle));
+    }
+
+    function attachPdfControls(){
+      const pdfBtn = document.getElementById("pdfBtn");
+      const pdfPlay = document.getElementById("pdfPlay");
+      const pdfTurtle = document.getElementById("pdfTurtle");
+      const raw = "DESCARGAR PDF";
+
+      pdfPlay.addEventListener("click", () => speakFromButton(pdfBtn, raw, false, pdfTurtle));
+      pdfTurtle.addEventListener("click", () => speakFromButton(pdfBtn, raw, true, pdfTurtle));
+
+      pdfBtn.addEventListener("click", () => generateAndDownloadPDF());
     }
 
     function warmVoices(){
@@ -926,6 +913,7 @@
     attachHeaderControls();
     attachGradeControls();
     attachResultControls();
+    attachPdfControls();
     warmVoices();
 
     document.addEventListener("visibilitychange", () => {
